@@ -13,8 +13,9 @@ class Table:
             self.n_rows = 0
         else:
             self.n_rows = len(data[0])
-        self.data = data
-        self.data_by_row = list(map(list, zip(*self.data)))
+        self.data = np.array(data)
+        self.data_by_row = self.data.T
+        #self.data_by_row = list(map(list, zip(*self.data)))
         self.datatypes = datatypes
         self.header = []
         if header is None:
@@ -88,7 +89,7 @@ class Table:
         row_max = self.max_row_print
         if row_max is None:
             row_max = 1e8
-        data2print = copy.deepcopy(self.data)
+        data2print = copy.deepcopy(self.data.tolist())
         if len(data2print) == 0:
             data2print = [[] for _ in range(len(self.header))]
         for idx, col in enumerate(data2print):
